@@ -2,19 +2,22 @@ package kr.ac.cu.moai.dcumusicplayer;
 
 import android.Manifest;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    private MediaPlayer mediaPlayer;
 
     ListView listViewMP3;
     ArrayList<String> mp3files;
@@ -57,6 +60,32 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("mp3", selectedMP3);
             startActivity(intent);
         });
+        Button playButton = findViewById(R.id.playButton);
+        Button pauseButton = findViewById(R.id.pauseButton);
 
+        // Replace with the path to your audio file
+        mediaPlayer = MediaPlayer.create(this, R.raw.sample_audio);
+
+        playButton.setOnClickListener(v -> {
+            if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+                mediaPlayer.start();
+            }
+        });
+
+        pauseButton.setOnClickListener(v -> {
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+            }
+        });
+
+
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 }

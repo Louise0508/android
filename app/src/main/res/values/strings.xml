@@ -38,4 +38,6 @@
         dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="cover_image">cover image</string>
+    <string name="pause">Pause</string>
+    <string name="play">Play</string>
 </resources>
